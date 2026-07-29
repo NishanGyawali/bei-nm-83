@@ -1,20 +1,25 @@
+import math
 def f(x):
-    return x**3 - x - 2
-a = int(input("Enter the value of a: "))
-b = int(input("Enter the value of b: "))
-tolerance = 0.001
-max_iter= 100
+    return x * math.sin(x) + math.cos(x)
+
+a = 2
+b = 3
+tolerance = 0.0001
+max_iter = 100
+
 if f(a) * f(b) >= 0:
     print("Invalid interval. Root is not bracketed.")
 else:
+    print(f"{'a':<12}{'b':<12}{'c':<12}{'f(c)':<12}")
+    print("-" * 48)
+
     for i in range(max_iter):
-        c = (a + b) / 2
+        c = (a * f(b) - b * f(a)) / (f(b) - f(a))
+        print(f"{a:<12.6f}{b:<12.6f}{c:<12.6f}{f(c):<12.6f}")
 
         if f(c) == 0:
             print("Exact root found:", c)
-            print("Number of iterations:", i + 1)
             break
-
         elif f(a) * f(c) < 0:
             b = c
         else:
@@ -22,5 +27,4 @@ else:
 
         if abs(b - a) < tolerance:
             print("Approximate root:", c)
-            print("Number of iterations:", i + 1)
             break
